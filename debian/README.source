@@ -1,0 +1,87 @@
+This package is maintained with git-buildpackage(1). It follows DEP-14 for
+branch naming (e.g. using debian/master for the current version in Debian
+unstable due Debian Python team policy).
+
+It uses pristine-tar(1) to store enough information in git to generate bit
+identical tarballs when building the package without having downloaded an
+upstream tarball first.
+
+When working with patches it is recommended to use "gbp pq import" to import
+the patches, modify the source and then use "gbp pq export --commit" to commit
+the modifications.
+
+The changelog is generated using "gbp dch" so if you submit any changes don't
+bother to add changelog entries but rather provide a nice git commit message
+that can then end up in the changelog.
+
+It is recommended to build the package with pbuilder using:
+
+    gbp buildpackage --git-pbuilder
+
+For information on how to set up a pbuilder environment see the git-pbuilder(1)
+manpage. In short:
+
+    DIST=sid git-pbuilder create
+    gbp clone https://salsa.debian.org/python-team/packages/python-opentelemetry.git
+    cd python-opentelemetry
+    gbp buildpackage --git-pbuilder
+
+
+Additional dependencies for building python-opentelemetry-doc
+-------------------------------------------------------------
+
+The build of the documentation is depending also on 'opencensus' which isn't
+packaged yet. Read also the following chapter if we might not need this module
+in the future.
+
+This package is only needed by sphinx.autodoc to set the correct linkings.
+
+
+Missing dependencies in Debian
+------------------------------
+
+The packages
+
+  python3-opentelemetry-opencensus-shim and 
+  python3-opentelemetry-exporter-opencensus
+
+will need additional binary dependencies and have been disabeld in
+debian/control for now.
+
+In detail these dependencies needs to get provided:
+
+python3-opentelemetry-opencensus-shim -> opencensus
+   (https://github.com/census-instrumentation/opencensus-python)
+python3-opentelemetry-exporter-opencensus -> opencensus-proto
+   (https://github.com/census-instrumentation/opencensus-proto)
+
+Given the hint on https://github.com/census-instrumentation/opencensus-proto
+it might be useful to wait and ask OpenTelemetry upstream if these modules
+can be dropped.
+
+
+Warning while build of the documentation
+----------------------------------------
+
+While building the Sphinx based documentation various warnings are emitted like
+
+/build/python-opentelemetry-1.30.0/.pybuild/dist-packages/build/opentelemetry/trace/__init__.py:docstring of opentelemetry.trace.Tracer.start_span:7: WARNING: more than one target found for 'any' cross-reference 'Context': could be :py:class:`opentelemetry.context.Context` or :py:class:`opentelemetry.context.context.Context`
+/build/python-opentelemetry-1.30.0/.pybuild/dist-packages/build/opentelemetry/trace/__init__.py:docstring of opentelemetry.trace.Tracer.start_span:7: WARNING: more than one target found for 'any' cross-reference 'Context': could be :py:class:`opentelemetry.context.Context` or :py:class:`opentelemetry.context.context.Context`
+<unknown>:1: WARNING: py:class reference target not found: grpc.ChannelCredentials [ref.class]
+<unknown>:1: WARNING: py:class reference target not found: grpc.Compression [ref.class]
+/build/python-opentelemetry-1.30.0/.pybuild/docstring of opentelemetry.sdk.environment_variables.OTEL_EXPORTER_OTLP_COMPRESSION:6: WARNING: 'any' reference target not found: grpc.Compression.Gzip [ref.any]
+/build/python-opentelemetry-1.30.0/.pybuild/docstring of opentelemetry.sdk.environment_variables.OTEL_EXPORTER_OTLP_COMPRESSION:7: WARNING: 'any' reference target not found: grpc.Compression.Deflate [ref.any]
+/build/python-opentelemetry-1.30.0/.pybuild/docstring of opentelemetry.sdk.environment_variables.OTEL_EXPORTER_OTLP_COMPRESSION:9: WARNING: 'any' reference target not found: grpc.Compression.NoCompression [ref.any]
+/build/python-opentelemetry-1.30.0/.pybuild/dist-packages/build/opentelemetry/sdk/trace/__init__.py:docstring of opentelemetry.sdk.trace.ReadableSpan:3: WARNING: 'any' reference target not found: ReadableSpan`s are created as a direct result from using the tracing pipeline via the `Tracer [ref.any]
+/build/python-opentelemetry-1.30.0/.pybuild/dist-packages/build/opentelemetry/sdk/trace/__init__.py:docstring of opentelemetry.sdk.trace.Span.add_link:3: WARNING: more than one target found for 'any' cross-reference 'SpanContext': could be :py:class:`opentelemetry.trace.SpanContext` or :py:class:`opentelemetry.trace.span.SpanContext`
+/build/python-opentelemetry-1.30.0/.pybuild/dist-packages/build/opentelemetry/sdk/trace/__init__.py:docstring of opentelemetry.sdk.trace.Tracer.start_span:7: WARNING: more than one target found for 'any' cross-reference 'Context': could be :py:class:`opentelemetry.context.Context` or :py:class:`opentelemetry.context.context.Context`
+/build/python-opentelemetry-1.30.0/.pybuild/dist-packages/build/opentelemetry/sdk/trace/__init__.py:docstring of opentelemetry.sdk.trace.Tracer.start_span:7: WARNING: more than one target found for 'any' cross-reference 'Context': could be :py:class:`opentelemetry.context.Context` or :py:class:`opentelemetry.context.context.Context`
+
+This is related to some internal resolving issues in the Python documentation
+and does not mean the build of the -doc package is failing.
+
+See also
+https://stackoverflow.com/questions/11417221/sphinx-autodoc-gives-warning-pyclass-reference-target-not-found-type-warning
+
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 21 Feb 2025 21:58:00 +0200

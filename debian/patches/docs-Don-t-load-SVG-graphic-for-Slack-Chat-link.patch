@@ -1,0 +1,27 @@
+From: Carsten Schoenert <c.schoenert@t-online.de>
+Date: Sat, 22 Feb 2025 10:11:28 +0200
+Subject: docs: Don't load SVG graphic for Slack Chat link
+
+Don't do any sideloading for graphics, this could become a privacy
+issue. Use a classical linkage instead without any graphics.
+
+Forwarded: not-needed
+---
+ docs/index.rst | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/docs/index.rst b/docs/index.rst
+index a66cc4f..0799522 100644
+--- a/docs/index.rst
++++ b/docs/index.rst
+@@ -1,9 +1,7 @@
+ OpenTelemetry-Python API Reference
+ ==================================
+ 
+-.. image:: https://img.shields.io/badge/slack-chat-green.svg
+-   :target: https://cloud-native.slack.com/archives/C01PD4HUVBL
+-   :alt: Slack Chat
++`Slack Chat <https://cloud-native.slack.com/archives/C01PD4HUVBL>`_
+ 
+ Welcome to the docs for the `Python OpenTelemetry implementation
+ <https://opentelemetry.io/docs/instrumentation/python/>`_.

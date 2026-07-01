@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e -u
+
+PKG_NAME=opentelemetry-exporter-prometheus
+
+PYTEST_OPTIONS=""
+
+mkdir -p "${AUTOPKGTEST_TMP}/opentelemetry"
+mkdir -p "${AUTOPKGTEST_TMP}/${PKG_NAME}"
+
+cp -a tests/opentelemetry-test-utils/src/opentelemetry/test "${AUTOPKGTEST_TMP}/opentelemetry"
+cp -a exporter/"${PKG_NAME}"/pyproject.toml exporter/"${PKG_NAME}"/tests "${AUTOPKGTEST_TMP}/${PKG_NAME}"
+
+for py3vers in $(py3versions -s); do
+    echo
+    echo "***************************"
+    echo "*** (python3-${PKG_NAME})"
+    echo "*** Testing with ${py3vers}"
+    echo "***************************"
+    echo
+    cd "${AUTOPKGTEST_TMP}/${PKG_NAME}" && \
+        echo -e "Content of current working folder:\n" && \
+        pwd && ls -la && \
+        echo -e "Running tests...\n" && \
+        PYTHONPATH="${AUTOPKGTEST_TMP}" "${py3vers}" -m pytest "${PYTEST_OPTIONS}" && \
+        rm -rf .pytest_cache || exit 1
+done
+
+echo
+
+exit 0

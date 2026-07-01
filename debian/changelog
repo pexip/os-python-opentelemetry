@@ -1,0 +1,101 @@
+python-opentelemetry (1.43.0-1) unstable; urgency=medium
+
+  * [11a6262] New upstream version 1.43.0
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 01 Jul 2026 09:35:22 +0200
+
+python-opentelemetry (1.42.1-1) unstable; urgency=medium
+
+  * [a6c1263] New upstream version 1.42.1
+  * [dfb1a0f] Rebuild patch queue from patch-queue branch
+    Dropped patch (fixed upstream):
+    Don-t-try-using-importlib_metadata-library.patch
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 30 May 2026 09:46:16 +0200
+
+python-opentelemetry (1.41.0-2) unstable; urgency=medium
+
+  * [0fa4b08] d/control: Add missing deps in -sdk package
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 18 Apr 2026 10:37:18 +0200
+
+python-opentelemetry (1.41.0-1) unstable; urgency=medium
+
+  * [443c10d] New upstream version 1.41.0
+  * [0b1f02f] d/control: Add new needed build deps
+  * [40d87f7] d/control: Adding bin python3-opentelemetry-proto-json
+  * [c0d1f59] d/rules: Add new pkg into the build
+  * [101631c] d/control: Update Standards-Version to 4.7.4
+    No further changes needed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Thu, 16 Apr 2026 17:34:15 +0200
+
+python-opentelemetry (1.40.0-1) unstable; urgency=medium
+
+  * [eaa08a1] New upstream version 1.40.0
+  * [308a7d1] Rebuild patch queue from patch-queue branch
+    Renamed patch:
+    importlib_metadata.patch
+    -> Don-t-try-using-importlib_metadata-library.patch
+  * [07c10ae] d/copyright: Update year data
+  * [f453bc7] d/control: Drop field Priority: optional
+  * [524f8d2] d/control: Update Standards-Version to 4.7.3
+    No further changes needed.
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 07 Mar 2026 07:51:35 +0200
+
+python-opentelemetry (1.39.1-2) unstable; urgency=medium
+
+  * Team Upload
+  * Add debian/salsa-ci.yml
+  * Drop dependency on python3-importlib-metadata backport
+
+ -- Alexandre Detiste <tchet@debian.org>  Mon, 09 Feb 2026 17:51:13 +0100
+
+python-opentelemetry (1.39.1-1) unstable; urgency=medium
+
+  * [034faf6] Rebuid patch queue from patch-queue branch
+    Fixed typo in metadata:
+    Use-local-intersphinx-resources-where-possible.patch
+  * [167467b] d/control: Mark more bin packages Multi-Arch: foreign
+  * [9bf17bd] New upstream version 1.39.1
+  * [1338fcc] autopkgtest: Ignore async testing in sdk package
+  * [265d981] autopkgtest: Ignore test05-python3-opentelemetry-exporter-otlp-proto-common
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 12 Dec 2025 11:47:12 +0200
+
+python-opentelemetry (1.38.0-2) unstable; urgency=medium
+
+  * Team Upload
+  * Fix Vcs tags
+  * Apply Multi-Arch: hint
+
+  [ Carsten Schoenert ]
+  * [7024055] d/control: Correct long desc for -doc package (Closes: #1119714)
+  * [f14b1b1] d/control: Another typo fix in a long description
+
+ -- Alexandre Detiste <tchet@debian.org>  Thu, 27 Nov 2025 06:56:04 +0100
+
+python-opentelemetry (1.38.0-1) unstable; urgency=medium
+
+  * [4ec47f6] New upstream version 1.38.0
+  * [0bab0a8] d/control: Add python3-prometheus-client for -doc build
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Wed, 29 Oct 2025 07:39:43 +0200
+
+python-opentelemetry (1.35.0-2) unstable; urgency=medium
+
+  * [378c134] d/copyright: Add missing info about Google Inc.
+    Thanks Thorsten for spotting this missing information!
+  * [0e14e17] d/watch: Convert to version 5
+  * [85ee3ac] d/rules: Clean every occurrencesof folder .mypy_cache
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Sat, 25 Oct 2025 08:25:42 +0200
+
+python-opentelemetry (1.35.0-1) unstable; urgency=medium
+
+  * [950ea01] New upstream version 1.35.0
+  * [129b9e3] First and basic Debianization
+    (Closes: #1109099)
+
+ -- Carsten Schoenert <c.schoenert@t-online.de>  Fri, 18 Jul 2025 09:56:15 +0200

@@ -1,0 +1,6 @@
+opentelemetry_api                        python3-opentelemetry-api
+opentelemetry_exporter_otlp_proto_common python3-opentelemetry-exporter-otlp-proto-common
+opentelemetry_exporter_zipkin_json       python3-opentelemetry-exporter-zipkin-json
+opentelemetry_proto                      python3-opentelemetry-proto
+opentelemetry_sdk                        python3-opentelemetry-sdk
+opentelemetry_semantic_conventions       python3-opentelemetry-semantic-conventions

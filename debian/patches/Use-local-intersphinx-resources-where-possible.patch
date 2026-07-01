@@ -1,0 +1,42 @@
+From: Carsten Schoenert <c.schoenert@t-online.de>
+Date: Sat, 22 Feb 2025 09:01:32 +0200
+Subject: Use local intersphinx resources where possible
+
+We can use the object.inv files from the various -doc packages we have
+within the archive.
+python-grpcio-doc isn't available at the moment. There is a whislist bug
+about such a package in Debian:
+
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1098648
+
+Forwarded: not-needed
+---
+ docs/conf.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/docs/conf.py b/docs/conf.py
+index 45fc14d..bd7dca4 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -81,15 +81,15 @@ extensions = [
+ ]
+ 
+ intersphinx_mapping = {
+-    "python": ("https://docs.python.org/3/", None),
++    "python": ("/usr/share/doc/python3-doc/html", None),
+     "opentracing": (
+-        "https://opentracing-python.readthedocs.io/en/latest/",
++        "/usr/share/doc/python3-opentracing/html",
+         None,
+     ),
+-    "aiohttp": ("https://aiohttp.readthedocs.io/en/stable/", None),
+-    "wrapt": ("https://wrapt.readthedocs.io/en/latest/", None),
+-    "pymongo": ("https://pymongo.readthedocs.io/en/stable/", None),
+-    "grpc": ("https://grpc.github.io/grpc/python/", None),
++    "aiohttp": ("/usr/share/doc/python-aiohttp-doc/html", None),
++    "wrapt": ("/usr/share/doc/python-wrapt-doc/html", None),
++    "pymongo": ("/usr/share/doc/python-pymongo-doc/html", None),
++    #"grpc": ("/usr/share/doc/python-grpcio-doc/html", None),
+ }
+ 
+ # http://www.sphinx-doc.org/en/master/config.html#confval-nitpicky

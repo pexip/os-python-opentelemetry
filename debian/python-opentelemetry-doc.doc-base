@@ -1,0 +1,8 @@
+Document: python-opentelemetry-doc
+Title: OpenTelemetry-Python API Reference
+Abstract: Documentation of the OpenTelemetry-Python API Reference
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-opentelemetry-doc/html/index.html
+Files: /usr/share/doc/python-opentelemetry-doc/html/*.html

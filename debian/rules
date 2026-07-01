@@ -1,0 +1,154 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+#export DH_VERBOSE = 1
+
+SPHINXOPTS := -E -N
+
+export TMP_DIST-PACKAGES_FOLDER=$(CURDIR)/.pybuild/dist-packages/build
+
+PYTHON_OPENTELEMETRY_PACKAGES=\
+opentelemetry-api \
+opentelemetry-proto \
+opentelemetry-proto-json \
+opentelemetry-sdk \
+opentelemetry-semantic-conventions \
+$(NULL)
+
+PYTHON_OPENTELEMETRY_EXPORTER_PACKAGES=\
+opentelemetry-exporter-opencensus \
+opentelemetry-exporter-otlp-proto-common \
+opentelemetry-exporter-otlp-proto-grpc \
+opentelemetry-exporter-otlp-proto-http \
+opentelemetry-exporter-prometheus \
+opentelemetry-exporter-zipkin-json \
+opentelemetry-exporter-zipkin-proto-http \
+$(NULL)
+
+PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGES=\
+opentelemetry-propagator-b3 \
+opentelemetry-propagator-jaeger \
+$(NULL)
+
+PYTHON_OPENTELEMETRY_SHIM_PACKAGES=\
+opentelemetry-opencensus-shim \
+opentelemetry-opentracing-shim \
+$(NULL)
+
+%:
+	dh $@
+
+override_dh_clean:
+	dh_clean
+	rm -rf .pybuild
+	find -type d -name ".mypy_cache" -exec rm -rf {} \; -prune
+
+override_dh_auto_build:
+	for PYTHON_OPENTELEMETRY_PACKAGE in $(PYTHON_OPENTELEMETRY_PACKAGES); do \
+	    echo "\n########\n# Building package $${PYTHON_OPENTELEMETRY_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_PACKAGE} ;\
+	    dh_auto_build --buildsystem=pybuild --sourcedirectory $${PYTHON_OPENTELEMETRY_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_PACKAGE} ;\
+	done
+	for PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE in $(PYTHON_OPENTELEMETRY_EXPORTER_PACKAGES); do \
+	    echo "\n########\n# Building package $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	    dh_auto_build --buildsystem=pybuild --sourcedirectory exporter/$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}  -- --name=$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	done
+	for PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE in $(PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGES); do \
+	    echo "\n########\n# Building package $${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE} ;\
+	    dh_auto_build --buildsystem=pybuild --sourcedirectory propagator/$${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE} ;\
+	done
+	for PYTHON_OPENTELEMETRY_SHIM_PACKAGE in $(PYTHON_OPENTELEMETRY_SHIM_PACKAGES); do \
+	    echo "\n########\n# Building package $${PYTHON_OPENTELEMETRY_SHIM_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_SHIM_PACKAGE} ;\
+	    dh_auto_build --buildsystem=pybuild --sourcedirectory shim/$${PYTHON_OPENTELEMETRY_SHIM_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_SHIM_PACKAGE} ;\
+	done
+	# To make sphinx.autodoc and also the tests find the various opentelemetry modules
+	# we need to copy them into a folder we can use as PYTHONPATH then.
+	# opencensus is still not available in the archive, see also README.source.
+	mkdir .pybuild/dist-packages && \
+	for FOLDER in `find .pybuild/cpython3_3.*_opentelemetry-*/ -maxdepth 1 -type d -name build`; do \
+	    echo "Copy $${FOLDER} -> .pybuild/dist-packages" ;\
+	    cp -a $${FOLDER} .pybuild/dist-packages ;\
+	done
+	# Copy the helper module 'test' for the tests into place.
+	cp -a tests/opentelemetry-test-utils/src/opentelemetry/test $(TMP_DIST-PACKAGES_FOLDER)/opentelemetry
+
+override_dh_auto_install:
+	for PYTHON_OPENTELEMETRY_PACKAGE in $(PYTHON_OPENTELEMETRY_PACKAGES); do \
+	    echo "\n########\n# Installing package $${PYTHON_OPENTELEMETRY_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_PACKAGE} ;\
+	    dh_auto_install --buildsystem=pybuild --sourcedirectory $${PYTHON_OPENTELEMETRY_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_PACKAGE} ;\
+	done
+	for PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE in $(PYTHON_OPENTELEMETRY_EXPORTER_PACKAGES); do \
+	    echo "\n########\n# Installing package $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	    dh_auto_install --buildsystem=pybuild --sourcedirectory exporter/$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	done
+	for PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE in $(PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGES); do \
+	    echo "\n########\n# Installing package $${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE} ;\
+	    dh_auto_install --buildsystem=pybuild --sourcedirectory propagator/$${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_PROPAGATOR_PACKAGE} ;\
+	done
+	for PYTHON_OPENTELEMETRY_SHIM_PACKAGE in $(PYTHON_OPENTELEMETRY_SHIM_PACKAGES); do \
+	    echo "\n########\n# Installing package $${PYTHON_OPENTELEMETRY_SHIM_PACKAGE}\n########" ;\
+	    PYBUILD_NAME=$${PYTHON_OPENTELEMETRY_SHIM_PACKAGE} ;\
+	    dh_auto_install --buildsystem=pybuild --sourcedirectory shim/$${PYTHON_OPENTELEMETRY_SHIM_PACKAGE} -- --name=$${PYTHON_OPENTELEMETRY_SHIM_PACKAGE} ;\
+	done
+
+override_dh_auto_test:
+	for PYTHON_OPENTELEMETRY_PACKAGE in $(PYTHON_OPENTELEMETRY_PACKAGES); do \
+	    echo "\n#######################\n# Run tests for $${PYTHON_OPENTELEMETRY_PACKAGE}\n#######################\n" ;\
+	    cd $(CURDIR)/$${PYTHON_OPENTELEMETRY_PACKAGE} ;\
+	    PYTHONPATH=$(TMP_DIST-PACKAGES_FOLDER) python3 -m pytest ;\
+	done
+	for PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE in $(PYTHON_OPENTELEMETRY_EXPORTER_PACKAGES); do \
+	    if [ "$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}" = "opentelemetry-exporter-opencensus" ]; then \
+	        echo "\n#######################\n# Running tests for $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n#######################\n" ;\
+	        echo " ...skipped, missing a dependency!" ;\
+	    elif [ "$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}" = "opentelemetry-exporter-otlp-proto-grpc" ]; then \
+	        echo "\n#######################\n# Run tests for $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n#######################\n" ;\
+	        cd $(CURDIR)/exporter/$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	        PYTHONPATH=$(TMP_DIST-PACKAGES_FOLDER) python3 -m pytest --ignore tests/logs/test_otlp_logs_exporter.py \
+	                                                                 --ignore tests/test_otlp_exporter_mixin.py \
+	                                                                 --ignore tests/test_otlp_metrics_exporter.py \
+	                                                                 --ignore tests/test_otlp_trace_exporter.py ;\
+	    elif [ "$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}" = "opentelemetry-exporter-zipkin-json" ]; then \
+	        echo "\n#######################\n# Run tests for $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n#######################\n" ;\
+	        cd $(CURDIR)/exporter/$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	        PYTHONPATH=$(TMP_DIST-PACKAGES_FOLDER) python3 -m pytest -k "not test_encode \
+	                                                                 and not test_encode_local_endpoint_default \
+	                                                                 and not test_encode_local_endpoint_explicits \
+	                                                                 and not test_encode_max_tag_length_5 \
+	                                                                 and not test_encode_max_tag_length_9 \
+	                                                                 and not test_encode_max_tag_length_10 \
+	                                                                 and not test_encode_max_tag_length_11 \
+	                                                                 and not test_encode_max_tag_length_128" ;\
+	    elif [ "$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}" = "opentelemetry-exporter-zipkin-proto-http" ]; then \
+	        echo "\n#######################\n# Run tests for $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n#######################\n" ;\
+	        cd $(CURDIR)/exporter/$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	        PYTHONPATH=$(TMP_DIST-PACKAGES_FOLDER) python3 -m pytest -k "not test_encode \
+	                                                                 and not test_encode_local_endpoint_default \
+	                                                                 and not test_encode_local_endpoint_explicits \
+	                                                                 and not test_encode_max_tag_length_5 \
+	                                                                 and not test_encode_max_tag_length_9 \
+	                                                                 and not test_encode_max_tag_length_10 \
+	                                                                 and not test_encode_max_tag_length_11 \
+	                                                                 and not test_encode_max_tag_length_128" ;\
+	    else \
+	        echo "\n#######################\n# Run tests for $${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE}\n#######################\n" ;\
+	        cd $(CURDIR)/exporter/$${PYTHON_OPENTELEMETRY_EXPORTER_PACKAGE} ;\
+	        PYTHONPATH=$(TMP_DIST-PACKAGES_FOLDER) python3 -m pytest ;\
+	    fi \
+	done
+
+override_dh_sphinxdoc:
+ifeq (,$(findstring nodoc, $(DEB_BUILD_OPTIONS)))
+	cd .pybuild && \
+	PYTHONPATH=$(TMP_DIST-PACKAGES_FOLDER) && \
+	export PYTHONPATH && \
+	    python3 -m sphinx -b html $(SPHINXOPTS) ../docs $(CURDIR)/debian/python-opentelemetry-doc/usr/share/doc/python-opentelemetry-doc/html
+	    rm $(CURDIR)/debian/python-opentelemetry-doc/usr/share/doc/python-opentelemetry-doc/html/.nojekyll
+	dh_sphinxdoc
+endif

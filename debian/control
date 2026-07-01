@@ -1,0 +1,382 @@
+Source: python-opentelemetry
+Section: python
+Maintainer: Debian Python Team <team+python@tracker.debian.org>
+Uploaders:
+ Carsten Schoenert <c.schoenert@t-online.de>,
+ Kathara Sasikumar <katharasasikumar007@gmail.com>,
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-python3,
+ dh-sequence-sphinxdoc <!nodoc>,
+ python3-all,
+ python3-grpcio <!nocheck>,
+Build-Depends-Indep:
+ pybuild-plugin-pyproject,
+ python-aiohttp-doc <!nodoc>,
+# python-grpcio-doc <!nodoc>,
+ python-opentracing-doc <!nodoc>,
+ python-pymongo-doc <!nodoc>,
+ python-wrapt-doc <!nodoc>,
+ python3-django <!nodoc>,
+ python3-doc <!nodoc>,
+ python3-deprecated <!nocheck>,
+ python3-google-api-core <!nodoc>,
+ python3-flaky <!nocheck>,
+ python3-grpcio <!nodoc>,
+ python3-hatchling,
+ python3-jsonschema,
+ python3-opentracing <!nodoc>,
+ python3-prometheus-client <!nocheck> <!nodoc>,
+ python3-pytest <!nocheck>,
+ python3-pytest-asyncio <!nocheck>,
+ python3-pytest-benchmark <!nocheck>,
+ python3-pytest-lazy-fixtures <!nocheck>,
+ python3-pytest-mock <!nocheck>,
+ python3-pytest-timeout <!nocheck>,
+ python3-pytest-xdist <!nocheck>,
+ python3-redis <!nocheck>,
+ python3-requests <!nocheck>,
+ python3-sphinx <!nodoc>,
+ python3-sphinx-autodoc-typehints <!nodoc>,
+ python3-sphinx-rtd-theme <!nodoc>,
+ python3-typing-extensions <!nocheck>,
+Standards-Version: 4.7.4
+Homepage: https://github.com/open-telemetry/opentelemetry-python
+Vcs-Git: https://salsa.debian.org/python-team/packages/python-opentelemetry.git
+Vcs-Browser: https://salsa.debian.org/python-team/packages/python-opentelemetry
+Testsuite: autopkgtest-pkg-python
+
+Package: python-opentelemetry-doc
+Architecture: all
+Section: doc
+Depends:
+ ${misc:Depends},
+ ${sphinxdoc:Depends},
+Multi-Arch: foreign
+Description: OpenTelemetry-Python API Reference
+ OpenTelemetry is a collection of APIs, SDKs, and tools. Use it to instrument,
+ generate, collect, and export telemetry data (metrics, logs, and traces) to
+ help you analyze your software’s performance and behavior.
+ .
+ OpenTelemetry, also known as OTel, is a vendor-neutral open source
+ Observability
+ (https://opentelemetry.io/docs/concepts/observability-primer/#what-is-observability)
+ framework for instrumenting, generating, collecting, and exporting telemetry
+ data such as traces
+ (https://opentelemetry.io/docs/concepts/signals/traces/),
+ metrics (https://opentelemetry.io/docs/concepts/signals/metrics/), and logs
+ (https://opentelemetry.io/docs/concepts/signals/logs/).
+ .
+ This package contains the docs for the Python OpenTelemetry implementation.
+
+Package: python3-opentelemetry-api
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Python API
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ The OpenTelemetry API is a collection of language-specific APIs (designed to
+ be language-agnostic) that standardize the way telemetry data is captured
+ and processed. Consider it a contract between your application code and the
+ actual implementation (SDK). The API enables developers to consistently
+ instrument their code, while the SDK handles the actual collection and export
+ of telemetry data.
+ .
+ Key components of the API are:
+ .
+  * Tracers: It builds and manages spans for distributed tracing.
+  * Meters: It is used to track application metrics (such as latency and
+            failures).
+  * Loggers: It is for creating structured log entries.
+
+Package: python3-opentelemetry-proto
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Python Proto
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library contains the generated code for OpenTelemetry protobuf data
+ model. The code in the current package was generated using the >= v1.2.0
+ release of opentelemetry-proto
+ (https://github.com/open-telemetry/opentelemetry-proto).
+
+Package: python3-opentelemetry-proto-json
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Python Json Proto
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library contains the generated code for OpenTelemetry protobuf data model
+ with JSON encoding support. The code in the current package was generated
+ using the v1.9.0 release of opentelemetry-proto and includes definitions for
+ the OpenTelemetry JSON Protobuf encoding specification.
+  * OpenTelemetry Proto
+    (https://github.com/open-telemetry/opentelemetry-proto)
+  * OTLP JSON Encoding Specification
+    (https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding)
+
+Package: python3-opentelemetry-sdk
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Python SDK
+ OpenTelemetry is an observability framework – an API, SDK, and tools that
+ are designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ The OpenTelemetry SDK is a real API implementation that includes mechanisms
+ for collecting, analyzing, and exporting telemetry data. While the API
+ specifies "what" to track, the SDK handles "how" the data is collected and
+ delivered to observability platforms, serving as the engine that drives your
+ observability pipeline.
+ .
+ Main features of the SDK:
+ .
+  * Data processing and aggregation: Determines how telemetry data is
+    processed and transferred to the backend.
+  * Sampling and filtering: Allows you to control which data is collected
+    using configurable criteria.
+  * Data export: Telemetry data is delivered to a variety of backends,
+    including Prometheus, Jaeger, and SigNoz.
+
+Package: python3-opentelemetry-semantic-conventions
+Architecture: all
+Depends:
+ python3-jsonschema,
+ python3-yaml,
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Multi-Arch: foreign
+Description: OpenTelemetry Semantic Conventions
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library contains generated code for the semantic conventions defined by
+ the OpenTelemetry specification.
+ .
+ The Semantic Conventions define a common set of (semantic) attributes which
+ provide meaning to data when collecting, producing and consuming it. The
+ Semantic Conventions specify among other things span names and kind, metric
+ instruments and units as well as attribute names, types, meaning and valid
+ values.
+
+# Requires opencensus-proto being packaged due bin dep.
+#Package: python3-opentelemetry-exporter-opencensus
+#Architecture: all
+#Depends:
+# ${misc:Depends},
+# ${python3:Depends},
+#Suggests:
+# python-opentelemetry-doc,
+#Description: OpenTelemetry OpenCensus Exporter
+# OpenTelemetry is an observability framework – an API, SDK, and tools that are
+# designed to aid in the generation and collection of application telemetry data
+# such as metrics, logs, and traces.
+# .
+# This library allows one to export traces using OpenCensus.
+
+Package: python3-opentelemetry-exporter-otlp
+Architecture: all
+Depends:
+ python3-opentelemetry-exporter-otlp-proto-grpc,
+ python3-opentelemetry-exporter-otlp-proto-http,
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Collector Exporters
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library is provided as a convenience to install all supported
+ OpenTelemetry Collector Exporters as an metapackage. Currently it installs:
+ .
+  * opentelemetry-exporter-otlp-proto-grpc
+  * opentelemetry-exporter-otlp-proto-http
+ .
+ In the future, additional packages will be available:
+ .
+  * opentelemetry-exporter-otlp-json-http
+ .
+ To avoid unnecessary dependencies, users should install the specific package
+ once they've determined their preferred serialization and protocol method.
+
+Package: python3-opentelemetry-exporter-otlp-proto-common
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Protobuf encoding
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library is provided as a convenience to encode to Protobuf.
+
+Package: python3-opentelemetry-exporter-otlp-proto-grpc
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Collector Protobuf over gRPC Exporter
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library allows one to export data to the OpenTelemetry Collector using
+ the OpenTelemetry Protocol using Protobuf over gRPC.
+
+Package: python3-opentelemetry-exporter-otlp-proto-http
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTelemetry Collector Protobuf over HTTP Exporter
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library allows one to export data to the OpenTelemetry Collector using
+ the OpenTelemetry Protocol using Protobuf over HTTP.
+
+Package: python3-opentelemetry-exporter-prometheus
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: Prometheus Metric Exporter for OpenTelemetry
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library allows one to export metrics data to Prometheus
+ https://prometheus.io/.
+
+Package: python3-opentelemetry-exporter-zipkin-json
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: Zipkin Span JSON Exporter for OpenTelemetry
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library allows export of tracing data to Zipkin https://zipkin.io/>
+ using JSON for serialization.
+
+Package: python3-opentelemetry-exporter-zipkin-proto-http
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: Zipkin Span Protobuf Exporter for OpenTelemetry
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library allows export of tracing data to Zipkin https://zipkin.io/
+ using Protobuf for serialization.
+
+Package: python3-opentelemetry-propagator-b3
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Multi-Arch: foreign
+Description: OpenTelemetry B3 Propagator
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library provides a propagator for the B3 format.
+
+Package: python3-opentelemetry-propagator-jaeger
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Multi-Arch: foreign
+Description: OpenTelemetry Jaeger Propagator
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ This library provides a propagator for the Jaeger format.
+
+# Requires opencensus being packaged due bin dep.
+#Package: python3-opentelemetry-opencensus-shim
+#Architecture: all
+#Depends:
+# ${misc:Depends},
+# ${python3:Depends},
+#Suggests:
+# python-opentelemetry-doc,
+#Description: OpenCensus Shim for OpenTelemetry
+# OpenTelemetry is an observability framework – an API, SDK, and tools that are
+# designed to aid in the generation and collection of application telemetry data
+# such as metrics, logs, and traces.
+# .
+# OpenCensus shim allows existing OpenCensus instrumentation to report to
+# OpenTelemetry. This allows you to incrementally migrate your existing
+# OpenCensus instrumentation to OpenTelemetry.
+# More details are available in the OpenCensus Compatibility Specification
+# https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/compatibility/opencensus.md.
+
+Package: python3-opentelemetry-opentracing-shim
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-opentelemetry-doc,
+Description: OpenTrace Shim for OpenTelemetry
+ OpenTelemetry is an observability framework – an API, SDK, and tools that are
+ designed to aid in the generation and collection of application telemetry
+ data such as metrics, logs, and traces.
+ .
+ OpenTracing shim allows existing OpenTracing instrumentation to report to
+ OpenTelemetry.

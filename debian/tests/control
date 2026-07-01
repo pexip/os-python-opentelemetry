@@ -1,0 +1,30 @@
+Tests:
+ test01-python3-opentelemetry-api
+ test02-python3-opentelemetry-proto
+ test03-python3-opentelemetry-sdk
+ test04-python3-opentelemetry-semantic-conventions
+# test05-python3-opentelemetry-exporter-otlp-proto-common
+# test06-python3-opentelemetry-exporter-otlp-proto-grpc
+ test07-python3-opentelemetry-exporter-prometheus
+# Some more adjustments needed.
+# test08-python3-opentelemetry-exporter-zipkin-json
+# test09-python3-opentelemetry-exporter-zipkin-http
+Depends:
+ python3-all,
+ python3-grpcio,
+ python3-deprecated,
+ python3-flaky,
+ python3-prometheus-client,
+ python3-pytest,
+ python3-pytest-asyncio,
+ python3-pytest-benchmark,
+ python3-pytest-lazy-fixtures,
+ python3-pytest-mock,
+ python3-pytest-timeout,
+ python3-pytest-xdist,
+ python3-redis,
+ python3-requests,
+ python3-typing-extensions,
+ @,
+Restrictions:
+ allow-stderr,

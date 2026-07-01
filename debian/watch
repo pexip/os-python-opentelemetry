@@ -1,0 +1,9 @@
+Version: 5
+
+Source: https://github.com/open-telemetry/opentelemetry-python.git
+Matching-Pattern: refs/tags/@ANY_VERSION@
+Compression: gz
+Dversion-Mangle: s/\+ds(\.?\d+)?$//
+Uversion-Mangle: s/(\d)[_\.\-\+]?((alpha|beta|post|pre|dev|RC|rc)\.?\d*)$/$1~$2/
+Mode: git
+Pgpmode: none
