@@ -1,6 +1,7 @@
-python-opentelemetry (1.43.0-1+pexip24u1) pexip; urgency=medium
+python-opentelemetry (1.43.0-1+pexip25u1) pexip-trixie; urgency=medium
 
   * Prepare Pexip packaging
+  * Remove zipkin packages as we do not need them and they cause FTBFS
 
  -- Mark Hymers <mark.hymers@pexip.com>  Thu, 30 Jul 2026 10:41:53 +0100
 
