@@ -289,35 +289,35 @@ Description: Prometheus Metric Exporter for OpenTelemetry
  This library allows one to export metrics data to Prometheus
  https://prometheus.io/.
 
-Package: python3-opentelemetry-exporter-zipkin-json
-Architecture: all
-Depends:
- ${misc:Depends},
- ${python3:Depends},
-Suggests:
- python-opentelemetry-doc,
-Description: Zipkin Span JSON Exporter for OpenTelemetry
- OpenTelemetry is an observability framework – an API, SDK, and tools that are
- designed to aid in the generation and collection of application telemetry
- data such as metrics, logs, and traces.
- .
- This library allows export of tracing data to Zipkin https://zipkin.io/>
- using JSON for serialization.
+#Package: python3-opentelemetry-exporter-zipkin-json
+#Architecture: all
+#Depends:
+# ${misc:Depends},
+# ${python3:Depends},
+#Suggests:
+# python-opentelemetry-doc,
+#Description: Zipkin Span JSON Exporter for OpenTelemetry
+# OpenTelemetry is an observability framework – an API, SDK, and tools that are
+# designed to aid in the generation and collection of application telemetry
+# data such as metrics, logs, and traces.
+# .
+# This library allows export of tracing data to Zipkin https://zipkin.io/>
+# using JSON for serialization.
 
-Package: python3-opentelemetry-exporter-zipkin-proto-http
-Architecture: all
-Depends:
- ${misc:Depends},
- ${python3:Depends},
-Suggests:
- python-opentelemetry-doc,
-Description: Zipkin Span Protobuf Exporter for OpenTelemetry
- OpenTelemetry is an observability framework – an API, SDK, and tools that are
- designed to aid in the generation and collection of application telemetry
- data such as metrics, logs, and traces.
- .
- This library allows export of tracing data to Zipkin https://zipkin.io/
- using Protobuf for serialization.
+#Package: python3-opentelemetry-exporter-zipkin-proto-http
+#Architecture: all
+#Depends:
+# ${misc:Depends},
+# ${python3:Depends},
+#Suggests:
+# python-opentelemetry-doc,
+#Description: Zipkin Span Protobuf Exporter for OpenTelemetry
+# OpenTelemetry is an observability framework – an API, SDK, and tools that are
+# designed to aid in the generation and collection of application telemetry
+# data such as metrics, logs, and traces.
+# .
+# This library allows export of tracing data to Zipkin https://zipkin.io/
+# using Protobuf for serialization.
 
 Package: python3-opentelemetry-propagator-b3
 Architecture: all
