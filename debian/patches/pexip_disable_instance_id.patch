@@ -1,0 +1,15 @@
+Disable use of service_instance ResourceDetector by default.
+
+It can still be enabled by setting the relevant environment variable
+if it is desired.
+--- a/opentelemetry-sdk/src/opentelemetry/sdk/resources/__init__.py
++++ b/opentelemetry-sdk/src/opentelemetry/sdk/resources/__init__.py
+@@ -513,7 +513,7 @@
+                 ).split(",")
+                 if name.strip()
+             ]
+-            + ["service_instance", "otel"]
++            + ["otel"]
+         )
+     )
+ 
